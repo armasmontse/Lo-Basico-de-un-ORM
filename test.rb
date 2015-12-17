@@ -11,10 +11,12 @@ chef = Chef.find(1)
 # assert chef[:last_name] == 'Adria'
 
 # Probando initialize
-chef_initialize = Chef.new(first_name: 'Miriam', last_name: 'Ruiz', email: "miriam@mail.com", phone: 123456789, birthday: "1234-12-4", created_at: Time.now, updated_at: Time.now)
-assert chef_initialize[:first_name] == 'Miriam'
+# chef_initialize = Chef.new(first_name: 'Miriam', last_name: 'Ruiz', email: "miriam@mail.com", phone: 123456789, birthday: "1234-12-4", created_at: Time.now, updated_at: Time.now)
+# assert chef_initialize[:first_name] == 'Miriam'
 
-
+# Probando all
+meal_all = Meal.new
+assert meal_all
 
 
 

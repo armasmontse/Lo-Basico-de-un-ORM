@@ -6,17 +6,33 @@ module MiniActiveRecord
 
     attr_reader :attributes, :old_attributes
 
+    # e.g., Chef.new(id: 1, first_name: 'Steve', last_name: 'Rogers', ...)
     def initialize(attributes = {})
       attributes.symbolize_keys!
       raise_error_if_invalid_attribute!(attributes.keys)
 
+      # This defines the value even if it's not present in attributes
       @attributes = {}
-      self.class.attribute_names.each do |name|
+      self.class.attribute_names.each do |name| #self era un objeto, para llamar a la clase lo hicimos self.class, asì sabemos que va a obtener cualquiera de las dos clases (Chef o Meal)
         @attributes[name] = attributes[name]
       end
 
       @old_attributes = @attributes.dup
     end
+
+    def self.all
+    MiniActiveRecord::Model.execute("SELECT * FROM self").map do |row|
+      self.class.new(row)
+    end
+  end
+
+
+
+
+
+
+
+
 
     def self.inherited(klass)
     end
