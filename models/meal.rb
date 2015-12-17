@@ -1,12 +1,5 @@
 class Meal < MiniActiveRecord::Model
 
-  def self.create(attributes)
-    record = self.new(attributes)
-    record.save
-
-    record
-  end
-
   def self.where(query, *args)
     MiniActiveRecord::Model.execute("SELECT * FROM meals WHERE #{query}", *args).map do |row|
       Meal.new(row)
@@ -47,19 +40,7 @@ class Meal < MiniActiveRecord::Model
     self[:id].nil?
   end
 
-  def save
-    if new_record?
-      results = insert!
-    else
-      results = update!
-    end
-
-    # When we save, remove changes between new and old attributes
-    @old_attributes = @attributes.dup
-
-    results
-  end
-
+ 
 
   private
 

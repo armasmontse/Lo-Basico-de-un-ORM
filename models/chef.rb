@@ -1,12 +1,5 @@
 class Chef < MiniActiveRecord::Model
 
-  def self.create(attributes)
-    record = self.new(attributes)
-    record.save
-
-    record
-  end
-
   def self.where(query, *args)
     MiniActiveRecord::Model.execute("SELECT * FROM chefs WHERE #{query}", *args).map do |row|
       Chef.new(row)
@@ -21,18 +14,7 @@ class Chef < MiniActiveRecord::Model
                           :birthday, :created_at, :updated_at]
 
 
-  def save
-    if new_record?
-      results = insert!
-    else
-      results = update!
-    end
-
-    # When we save, remove changes between new and old attributes
-    @old_attributes = @attributes.dup
-
-    results
-  end
+ 
 
   # We say a record is "new" if it doesn't have a defined primary key in its
   # attributes

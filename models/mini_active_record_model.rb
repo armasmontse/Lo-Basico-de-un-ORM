@@ -21,11 +21,30 @@ module MiniActiveRecord
     end
 
     def self.all
-    MiniActiveRecord::Model.execute("SELECT * FROM self").map do |row|
-      self.class.new(row)
+      MiniActiveRecord::Model.execute("SELECT * FROM self").map do |row|
+        self.class.new(row)
+      end
     end
-  end
 
+    def self.create(attributes) # Create crea en memoria y guarda en la base de datos, recibe los mismos atributos en forma de hash que initialize
+      record = self.new(attributes)
+      record.save # Llama al metodo .save de abajo para guardar en base de datos
+
+      record
+    end
+
+    def save # Metodo de instancia que guarda en base de datos
+      if new_record?
+        results = insert!
+      else
+        results = update!
+      end
+
+      # When we save, remove changes between new and old attributes
+      @old_attributes = @attributes.dup
+
+      results
+    end
 
 
 

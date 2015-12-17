@@ -1,6 +1,6 @@
 require_relative 'app'
 
-def assert(truthy)
+def assert(truthy) # Metodo que regresa el error "Tests failded" a menos que cumpla con la condicion de ser verdadero
   raise "Tests failed" unless truthy
 end
 
@@ -15,9 +15,13 @@ chef = Chef.find(1)
 # assert chef_initialize[:first_name] == 'Miriam'
 
 # Probando all
-meal_all = Meal.new
-assert meal_all
+# meal_all = Meal.new
+# assert meal_all
 
+# Probando create
+# Ya no se utiliza .new xq ya esta creado dentro del metodo, solo se llama a .create con los atributos del objeto
+chef_create = Chef.create(first_name: 'Montse', last_name: 'Armas', email: "mont@mail.com", phone: 9876543, birthday: "1989-10-4", created_at: Time.now, updated_at: Time.now) 
+assert chef_create[:last_name] == 'Armas'
 
 
 
