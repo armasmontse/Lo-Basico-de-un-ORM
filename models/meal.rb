@@ -1,10 +1,10 @@
 class Meal < MiniActiveRecord::Model
 
-  def self.where(query, *args)
-    MiniActiveRecord::Model.execute("SELECT * FROM meals WHERE #{query}", *args).map do |row|
-      Meal.new(row)
-    end
-  end
+  # def self.where(query, *args)
+  #   MiniActiveRecord::Model.execute("SELECT * FROM WHERE #{query}", *args).map do |row|
+  #     Meal.new(row)
+  #   end
+  # end
 
   def self.find(pk)
     self.where('id = ?', pk).first

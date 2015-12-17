@@ -46,7 +46,11 @@ module MiniActiveRecord
       results
     end
 
-
+    def self.where(query, *args)
+      MiniActiveRecord::Model.execute("SELECT * FROM #{self.to_s.downcase + 's'} WHERE #{query}", *args).map do |row|
+        self.new(row)
+      end
+    end
 
 
 
