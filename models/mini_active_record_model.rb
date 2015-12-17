@@ -21,8 +21,8 @@ module MiniActiveRecord
     end
 
     def self.all
-      MiniActiveRecord::Model.execute("SELECT * FROM self").map do |row|
-        self.class.new(row)
+      MiniActiveRecord::Model.execute("SELECT * FROM #{self.to_s.downcase}s").map do |row|
+        self.new(row)
       end
     end
 
@@ -158,37 +158,34 @@ module MiniActiveRecord
       end
     end
 
-  end
+    def insert!
+      self[:created_at] = DateTime.now
+      self[:updated_at] = DateTime.now
 
-  private
+      fields = self.attributes.keys
+      values = self.attributes.values
+      marks  = Array.new(fields.length) { '?' }.join(',')
 
-  def insert!
-    self[:created_at] = DateTime.now
-    self[:updated_at] = DateTime.now
+      insert_sql = "INSERT INTO #{self.to_s.downcase + 's'} (#{fields.join(',')}) VALUES (#{marks})"
 
-    fields = self.attributes.keys
-    values = self.attributes.values
-    marks  = Array.new(fields.length) { '?' }.join(',')
+      results = MiniActiveRecord::Model.execute(insert_sql, *values)
 
-    insert_sql = "INSERT INTO chefs (#{fields.join(',')}) VALUES (#{marks})"
+      # This fetches the new primary key and updates this instance
+      self[:id] = MiniActiveRecord::Model.last_insert_row_id
+      results
+    end
 
-    results = MiniActiveRecord::Model.execute(insert_sql, *values)
+    def update!
+      self[:updated_at] = DateTime.now
 
-    # This fetches the new primary key and updates this instance
-    self[:id] = MiniActiveRecord::Model.last_insert_row_id
-    results
-  end
+      fields = self.attributes.keys
+      values = self.attributes.values
 
-  def update!
-    self[:updated_at] = DateTime.now
+      update_clause = fields.map { |field| "#{field} = ?" }.join(',')
+      update_sql = "UPDATE #{self.to_s.downcase + 's'} SET #{update_clause} WHERE id = ?"
 
-    fields = self.attributes.keys
-    values = self.attributes.values
-
-    update_clause = fields.map { |field| "#{field} = ?" }.join(',')
-    update_sql = "UPDATE chefs SET #{update_clause} WHERE id = ?"
-
-    # We have to use the (potentially) old ID attribute in case the user has re-set it.
-    MiniActiveRecord::Model.execute(update_sql, *values, self.old_attributes[:id])
+      # We have to use the (potentially) old ID attribute in case the user has re-set it.
+      MiniActiveRecord::Model.execute(update_sql, *values, self.old_attributes[:id])
+    end
   end
 end

@@ -13,8 +13,8 @@ end
 # assert chef_initialize[:first_name] == 'Miriam'
 
 # Probando all
-# meal_all = Meal.new
-# assert meal_all
+# p Chef.all
+# p Meal.all
 
 # Probando create
 # Ya no se utiliza .new xq ya esta creado dentro del metodo, solo se llama a .create con los atributos del objeto
