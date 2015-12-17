@@ -27,8 +27,8 @@ class Meal < MiniActiveRecord::Model
     chef
   end
 
-
  
+
 
   # private
 
