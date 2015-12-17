@@ -25,9 +25,7 @@ end
 # p Chef.where("first_name = ?", 'Montse') # Damos la query del where(donde) seguido del = ?, el valor que ponemos despues de la coma sustituye al ?)
 
 # Probando find
-p chef = Chef.find(21)
-
-# Probando 
+# chef = Chef.find(21)
 
 
 
