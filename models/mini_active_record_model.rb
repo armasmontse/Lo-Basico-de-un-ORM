@@ -46,11 +46,16 @@ module MiniActiveRecord
       results
     end
 
-    def self.where(query, *args)
+    def self.where(query, *args) # Pedimos la query que nos interesa y el * nos dice que le va a dar 
       MiniActiveRecord::Model.execute("SELECT * FROM #{self.to_s.downcase + 's'} WHERE #{query}", *args).map do |row|
         self.new(row)
       end
     end
+
+    def self.find(pk)
+      self.where('id = ?', pk).first
+    end
+
 
 
 

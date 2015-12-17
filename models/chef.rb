@@ -1,14 +1,8 @@
 class Chef < MiniActiveRecord::Model
 
-  # def self.where(query, *args)
-  #   MiniActiveRecord::Model.execute("SELECT * FROM chefs WHERE #{query}", *args).map do |row|
-  #     Chef.new(row)
-  #   end
-  # end
+ 
 
-  def self.find(pk)
-    self.where('id = ?', pk).first
-  end
+ 
 
   self.attribute_names = [:id, :first_name, :last_name, :email, :phone,
                           :birthday, :created_at, :updated_at]

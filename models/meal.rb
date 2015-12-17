@@ -1,14 +1,10 @@
 class Meal < MiniActiveRecord::Model
 
-  # def self.where(query, *args)
-  #   MiniActiveRecord::Model.execute("SELECT * FROM WHERE #{query}", *args).map do |row|
-  #     Meal.new(row)
-  #   end
-  # end
 
-  def self.find(pk)
-    self.where('id = ?', pk).first
-  end
+
+  # def self.find(pk)
+  #   self.where('id = ?', pk).first
+  # end
 
   self.attribute_names = [:id, :name, :chef_id, :created_at, :updated_at]
 
